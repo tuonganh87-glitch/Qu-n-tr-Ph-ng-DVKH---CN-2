@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sơ đồ tổ chức và phân công – Phòng DVKH VietinBank CN2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F3F6FA; --surface:#FFFFFF; --text:#14213A; --text-2:#4B5872; --line:#C9D3E2;
+  --brand:#0A3F8C; --brand-tx:#FFFFFF; --red:#C8102E; --gold:#8A5A00; --gold-bg:#FFF4D6; --gold-bd:#E8C77A;
+  --t1:#0F6B5E; --t1-bg:#E5F3F0; --t1-bd:#9FD0C6;
+  --t2:#1D4FB0; --t2-bg:#E8EFFC; --t2-bd:#A9C0EC;
+  --t3:#8A2546; --t3-bg:#FAEBF0; --t3-bd:#E2AEC0;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1420; --surface:#162032; --text:#E6ECF5; --text-2:#A3B0C6; --line:#2E3B52;
+    --brand:#2F6FD0; --brand-tx:#FFFFFF; --red:#F0607A; --gold:#F2C66B; --gold-bg:#3A2E12; --gold-bd:#7A6022;
+    --t1:#7FD6C6; --t1-bg:#12302C; --t1-bd:#2C6A60;
+    --t2:#9DBDF5; --t2-bg:#17284A; --t2-bd:#34518C;
+    --t3:#F2A9C1; --t3-bg:#3A1A27; --t3-bd:#7A3550;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1420; --surface:#162032; --text:#E6ECF5; --text-2:#A3B0C6; --line:#2E3B52;
+  --brand:#2F6FD0; --brand-tx:#FFFFFF; --red:#F0607A; --gold:#F2C66B; --gold-bg:#3A2E12; --gold-bd:#7A6022;
+  --t1:#7FD6C6; --t1-bg:#12302C; --t1-bd:#2C6A60;
+  --t2:#9DBDF5; --t2-bg:#17284A; --t2-bd:#34518C;
+  --t3:#F2A9C1; --t3-bg:#3A1A27; --t3-bd:#7A3550;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 18px 56px}
+header{border-left:5px solid var(--red);padding-left:14px;margin-bottom:22px}
+header h1{font-size:clamp(22px,3.4vw,32px);line-height:1.25;font-weight:700;margin:0 0 6px;letter-spacing:-0.01em}
+header p{margin:0;color:var(--text-2);max-width:72ch}
+.hint{display:inline-block;margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:13.5px;color:var(--text-2)}
+h2{font-size:clamp(18px,2.4vw,22px);font-weight:600;margin:36px 0 6px}
+.sub{color:var(--text-2);margin:0 0 16px;max-width:72ch}
+.t1{--tb:var(--t1-bg);--tbd:var(--t1-bd);--tc:var(--t1)}
+.t2{--tb:var(--t2-bg);--tbd:var(--t2-bd);--tc:var(--t2)}
+.t3{--tb:var(--t3-bg);--tbd:var(--t3-bd);--tc:var(--t3)}
+
+/* clickable person */
+.pb{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;text-align:left;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.pb:hover{text-decoration-color:var(--tc,var(--brand))}
+.pb:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:4px}
+.pb[aria-pressed="true"]{color:var(--tc,var(--brand));text-decoration-color:currentColor}
+.star{display:inline-block;font-size:11.5px;font-weight:600;color:var(--gold);background:var(--gold-bg);border:1px solid var(--gold-bd);border-radius:999px;padding:0 7px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+
+/* Org chart */
+.head{max-width:380px;margin:0 auto;background:var(--brand);color:var(--brand-tx);border-radius:14px;padding:14px 18px;text-align:center}
+.head .r{font-size:13px;opacity:.9}
+.head .pb{font-size:19px;font-weight:700;line-height:1.3;text-align:center;text-decoration-color:rgba(255,255,255,.5)}
+.head .pb[aria-pressed="true"]{color:#fff;text-decoration-color:#fff}
+.head .d{font-size:13px;opacity:.9;margin-top:2px}
+.stem{width:2px;height:24px;background:var(--line);margin:0 auto}
+.branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;position:relative;padding-top:22px}
+.branches::before{content:"";position:absolute;top:0;left:16.66%;right:16.66%;height:2px;background:var(--line)}
+.team{position:relative;background:var(--tb);border:1px solid var(--tbd);border-radius:14px;padding:14px;color:var(--text)}
+.team::before{content:"";position:absolute;top:-22px;left:50%;width:2px;height:22px;background:var(--line)}
+.team h3{margin:0;font-size:16px;color:var(--tc);font-weight:700}
+.team .scope{font-size:13px;color:var(--text-2);margin:0 0 10px}
+.lead{background:var(--surface);border:1.5px solid var(--tc);border-radius:10px;padding:8px 10px;margin-bottom:10px}
+.lead .pb{font-weight:600}
+.lead .r{font-size:12.5px;color:var(--tc);font-weight:500}
+.unit{margin:0 0 8px}
+.unit .u{font-size:12.5px;font-weight:600;color:var(--tc);margin:0 0 4px}
+.ppl{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.ppl li{background:var(--surface);border-radius:8px;padding:6px 10px;font-size:14px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.ppl li span.r{font-size:12px;color:var(--text-2)}
+.count{font-size:12.5px;color:var(--text-2);margin-top:8px}
+@media (max-width:820px){
+  .branches{grid-template-columns:minmax(0,1fr);gap:22px;padding-top:0}
+  .branches::before{left:50%;right:auto;width:2px;top:0;bottom:0;height:auto}
+  .team::before{display:none}
+}
+
+/* tables */
+.tbl-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+.roster{min-width:680px}
+.rmt{min-width:640px}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:13px;font-weight:600;color:var(--text-2);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.stt{width:44px;text-align:center;font-weight:600}
+.tag{display:inline-block;padding:1px 9px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--tbd);background:var(--tb);color:var(--tc);white-space:nowrap}
+tr.lead-row td{font-weight:600}
+.user{font-size:12.5px;color:var(--text-2)}
+.rmlist{margin:0;padding-left:18px}
+.rmlist li{margin:0 0 2px}
+.rmlist small{color:var(--text-2)}
+
+/* matrix */
+function sn(id){var w=byId[id].name.split(" ");var s=w.slice(-2).join(" ");return /^Thị /.test(s)?byId[id].name:s}
+.matrix{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.m{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--tc);border-radius:12px;padding:12px 14px}
+.m .p{font-weight:700;font-size:15px}
+.m .o{font-size:14px;margin-top:4px}
+.m .s{font-size:13px;color:var(--text-2)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:14px}
+.step{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--brand);border-radius:12px;padding:12px 16px}
+.step .when{font-weight:700;color:var(--brand);margin-bottom:4px}
+.step ol{margin:0;padding-left:20px;font-size:14px}
+.step li{margin:0 0 4px}
+.grid-t{min-width:760px}
+.grid-t td:first-child{min-width:240px}
+.sm{margin:6px 0 2px!important;font-size:12.5px!important;font-weight:600;color:var(--text)!important}
+.rk{display:inline-block;font-size:11.5px;color:var(--tc);border:1px solid var(--tbd);background:var(--tb);border-radius:999px;padding:0 7px;margin-left:4px;white-space:nowrap}
+.note{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--text-2)}
+.note ul{margin:6px 0 0;padding-left:18px}
+footer{margin-top:32px;color:var(--text-2);font-size:12.5px;max-width:80ch}
+
+/* detail drawer */
+.scrim{position:fixed;inset:0;background:rgba(10,15,25,.45);z-index:30;opacity:0;visibility:hidden;transition:opacity .2s}
+.scrim.on{opacity:1;visibility:visible}
+.drawer{position:fixed;z-index:40;background:var(--surface);color:var(--text);overflow:auto;visibility:hidden;transition:transform .24s ease}
+@media (min-width:821px){
+  .drawer{top:0;right:0;bottom:0;width:min(440px,92vw);border-left:1px solid var(--line);transform:translateX(102%);padding:calc(20px + env(safe-area-inset-top,0px)) 22px calc(24px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:820px){
+  .drawer{left:0;right:0;bottom:0;max-height:84vh;border-radius:18px 18px 0 0;transform:translateY(102%);padding:18px 18px calc(24px + env(safe-area-inset-bottom,0px))}
+}
+.drawer.open{transform:none;visibility:visible}
+.dtop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;border-bottom:4px solid var(--tc);padding-bottom:12px;margin-bottom:14px}
+.dtop h3{margin:0;font-size:21px;line-height:1.3}
+.dtop .r{color:var(--tc);font-weight:600;font-size:14px}
+.dtop .u{color:var(--text-2);font-size:13px}
+.close{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:4px 12px;font:inherit;font-size:13px;cursor:pointer;flex:none}
+.close:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.qh{background:var(--gold-bg);border:1px solid var(--gold-bd);color:var(--text);border-radius:10px;padding:10px 12px;font-size:14px;margin:0 0 14px}
+.qh b{color:var(--gold)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 14px}
+.fact{background:var(--bg);border-radius:10px;padding:8px 10px}
+.fact .l{font-size:12px;color:var(--text-2)}
+.fact .v{font-size:14px;font-weight:600;line-height:1.35}
+.blk{margin:0 0 14px}
+.blk h4{margin:0 0 4px;font-size:14px;font-weight:600}
+.blk ul{margin:0;padding-left:20px;font-size:14px;color:var(--text-2)}
+.blk li{margin:0 0 4px}
+.blk p{margin:0;font-size:14px;color:var(--text-2)}
+.nav{display:flex;justify-content:space-between;gap:8px;margin-top:6px}
+.nav button{flex:1;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:7px 10px;font:inherit;font-size:13.5px;cursor:pointer}
+@media (prefers-reduced-motion: reduce){.drawer,.scrim{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Sơ đồ tổ chức và bảng phân công Phòng Dịch vụ Khách hàng</h1>
+  <p>VietinBank Chi nhánh 2 TP.HCM. Phòng gồm 18 cán bộ, chia thành 3 team: một khối hỗ trợ và hai team giao dịch. Phân công bám sát Thông báo phân công nhiệm vụ 07/2026, bảng phân công công việc 05/05/2026 và chiến dịch 5 mũi nhọn giai đoạn 04/11/2026 – 31/01/2027.</p>
+  <span class="hint">Bấm vào tên cán bộ để xem chi tiết công việc được giao</span>
+</header>
+
+<h2>Sơ đồ tổ chức</h2>
+<div class="org" id="org"></div>
+
+<h2>Ma trận đầu mối 5 mũi nhọn</h2>
+<p class="sub">Chiến dịch chỉ do khối kinh doanh thực hiện; khối back và hỗ trợ tập trung bảo đảm vận hành. Phó phòng phụ trách chỉ tiêu theo đúng Thông báo phân công 07/2026: Phó phòng Huyền phụ trách bảo hiểm, Phó phòng Bích Vân phụ trách thu phí và ngoại tệ. Hai cán bộ quy hoạch Ly Na và Thùy Linh nhận vai trò đầu mối như một nhiệm vụ thử thách.</p>
+<div class="matrix" id="matrix"></div>
+<div class="steps">
+ <div class="step"><div class="when">Ngày 1–5 · Giao việc</div><ol><li><b>Phó phụ trách phòng</b> chiết xuất dữ liệu khách hàng, chốt chỉ tiêu theo team.</li><li><b>Đầu mối mũi nhọn</b> lập danh sách khách mục tiêu cho mũi nhọn của mình.</li><li><b>Hai phó phòng</b> phân giao danh sách cho giao dịch viên trong team.</li><li><b>Phó phụ trách phòng</b> phê duyệt danh sách, chỉ tiêu và người phụ trách.</li></ol></div>
+ <div class="step"><div class="when">Ngày 27–30 · Đối soát</div><ol><li><b>Đầu mối mũi nhọn</b> tổng hợp kết quả mũi nhọn của mình.</li><li><b>Phó phòng phụ trách chỉ tiêu</b> đối soát với nguồn chính thức: Huyền cho VBI, Manulife; Bích Vân cho ngoại hối, số đẹp, gói tài khoản.</li><li><b>Hai phó phòng</b> xác nhận kết quả theo team.</li><li><b>Phó phụ trách phòng</b> phê duyệt, chủ trì tổng kết và vinh danh.</li></ol></div>
+</div>
+
+<h2>Danh sách cán bộ</h2>
+<p class="sub">Số thứ tự được đánh liên tục theo từng team, sau khi Nguyễn Hoài Anh nghỉ việc.</p>
+<div class="tbl-wrap"><table class="roster"><thead><tr><th>STT</th><th>Họ và tên</th><th>User</th><th>Team</th><th>Chức danh</th></tr></thead><tbody id="roster"></tbody></table></div>
+
+<h2>Bảng phân công công việc chi tiết</h2>
+<p class="sub">Chốt theo bảng phân công công việc DVKH 2026 ngày 05/05/2026. Mỗi đầu việc có một cán bộ chính và tối đa ba cán bộ dự phòng theo thứ tự.</p>
+<div class="tbl-wrap"><table class="grid-t"><thead><tr><th>Công việc</th><th>Chính</th><th>Dự phòng 1</th><th>Dự phòng 2</th><th>Dự phòng 3</th></tr></thead><tbody id="gridbody"></tbody></table></div>
+
+<h2>Giao dịch viên phối hợp RM</h2>
+<p class="sub">Theo bảng ghép cặp GDV – RM ngày 02/06. Giao dịch viên thực hiện toàn bộ giao dịch cho khách hàng cá nhân và doanh nghiệp của RM được ghép cặp; khi RM luân chuyển, GDV tiếp tục phụ trách RM thay thế.</p>
+<div class="tbl-wrap"><table class="rmt"><thead><tr><th>Giao dịch viên</th><th>Team</th><th>RM phối hợp</th><th>Số RM</th></tr></thead><tbody id="rmbody"></tbody></table></div>
+
+<h2>Nguyên tắc dự phòng và ủy quyền</h2>
+<div class="note"><ul>
+  <li>Lãnh đạo phòng thay thế theo Thông báo phân công: Ánh Nguyệt do Trần Thị Huyền thay; Trần Thị Huyền do Bích Vân thay; Bích Vân do Ánh Nguyệt thay.</li>
+  <li>Lãnh đạo phòng nghỉ phép, đi học phải gửi mail trước 5 ngày làm việc; vắng trên 3 ngày phải lập biên bản bàn giao.</li>
+  <li>Bảo Trân và Thùy Duyên dự phòng chéo; Hữu Thành và Minh Phong dự phòng chéo.</li>
+  <li>Người dự phòng thủ kho, thủ quỹ do Phó phụ trách phòng chỉ định theo quy định, bảo đảm tách bạch nhiệm vụ.</li>
+  <li>Khi giao dịch viên vắng, phó phòng phân công người cùng team tiếp nhận khách của các RM được ghép cặp.</li>
+</ul></div>
+
+<footer>Tài liệu nội bộ Phòng DVKH. Đội hình theo danh sách cập nhật tháng 11/2026; nhiệm vụ lãnh đạo phòng theo Thông báo phân công nhiệm vụ 07/2026; phân công công việc chi tiết theo bảng 05/05/2026; ghép cặp GDV – RM theo bảng ngày 02/06. Nhiệm vụ kiểm soát, phê duyệt thực hiện theo thẩm quyền và quy định hiện hành của VietinBank.</footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dname"></aside>
+
+<script>
+const P=[{"id": "nguyet", "u": "nta.nguyet", "name": "Nguyễn Thị Ánh Nguyệt", "team": 1, "role": "Phó Phụ trách Phòng Dịch vụ Khách hàng", "lead": true, "duty": ["Phụ trách chung: điều hành toàn bộ hoạt động Phòng DVKH, chịu trách nhiệm chung mọi vấn đề phát sinh; sắp xếp lịch trực kho tiền và lịch trực sau 17h.", "Kho quỹ: quản lý an toàn kho quỹ, thu chi tiền mặt, chìa khóa kho tiền và két, hồ sơ TSBĐ, giấy tờ có giá, ấn chỉ quan trọng.", "Điều hòa tiền mặt toàn chi nhánh, tiếp quỹ ATM, nộp lĩnh tiền với NHNN.", "Hệ thống CNTT: vận hành, bảo trì, đào tạo an toàn thông tin.", "Kế toán, tài chính: kiểm soát hạch toán, hậu kiểm, chi tiêu nội bộ, bảng cân đối, thuế GTGT trước ngày 20.", "Phê duyệt báo cáo NHNN theo Thông tư 35 trước ngày 15; đầu mối chuyển đổi số; quản trị dữ liệu và báo cáo chiết xuất; phụ trách chung chất lượng dịch vụ.", "Đào tạo, phát triển đội ngũ; phân bổ chỉ tiêu, lập kế hoạch bán hàng tại sảnh; quà sinh nhật, lễ tết cho khách hàng.", "Chỉ tiêu: nguồn vốn, CASA; chỉ số CX; văn hóa đổi mới sáng tạo."], "camp": ["Chủ trì chiến dịch 5 mũi nhọn, chủ trì họp PDCA tuần.", "Ngày 1–5: chiết xuất dữ liệu khách hàng, phê duyệt danh sách, chỉ tiêu và đầu mối.", "Ngày 27–30: phê duyệt kết quả đã đối soát, chủ trì tổng kết và vinh danh."], "sup": "Phó Giám đốc phụ trách", "bk": "Trần Thị Huyền", "stt": 1, "tasks": []}, {"id": "tien", "u": "tienntt", "name": "Nguyễn Thanh Thủy Tiên", "team": 1, "role": "Thủ kho", "duty": ["Giao nhận, bảo quản, xuất nhập hồ sơ TSBĐ, giấy tờ có giá, ấn chỉ quan trọng theo quy định.", "Phối hợp kiểm kê ấn chỉ quan trọng hằng quý và kiểm kê định kỳ.", "Phối hợp điều phối tiền mặt giữa thủ kho và giao dịch viên."], "camp": ["Không tham gia chiến dịch 5 mũi nhọn; tập trung bảo đảm vận hành an toàn, liên tục cho các team giao dịch."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Do Phó phụ trách phòng chỉ định theo quy định", "stt": 2, "tasks": []}, {"id": "tuoi", "u": "pttuoi", "name": "Phan Thị Tươi", "team": 1, "role": "Thủ quỹ", "duty": ["Thu chi, kiểm đếm tiền mặt; kiểm quỹ buổi trưa và cuối ngày.", "Phối hợp điều hòa tiền mặt với PGD, tiếp quỹ ATM, nộp lĩnh tiền với NHNN.", "Ghi chép sổ sách, mẫu biểu nghiệp vụ tiền tệ kho quỹ."], "camp": ["Không tham gia chiến dịch 5 mũi nhọn; tập trung bảo đảm vận hành an toàn, liên tục cho các team giao dịch."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Do Phó phụ trách phòng chỉ định theo quy định", "stt": 3, "tasks": []}, {"id": "phong", "u": "phongtm", "name": "Trần Minh Phong", "team": 1, "role": "Cán bộ điện toán", "duty": ["Lắp đặt, cài đặt, bảo trì máy tính, mạng nội bộ, đường truyền tại chi nhánh, PGD và điểm ATM.", "Hướng dẫn sử dụng phần mềm mới, đào tạo bảo mật và an toàn thông tin.", "Quản lý phân quyền user."], "camp": ["Không tham gia chiến dịch 5 mũi nhọn; tập trung bảo đảm vận hành an toàn, liên tục cho các team giao dịch."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Nguyễn Hữu Thành", "stt": 4, "tasks": [{"t": "Xử lý giao dịch thẻ ATM, thừa thiếu quỹ ATM, khiếu nại thẻ ATM tại quầy, CDs…, xử lý lỗi giao dịch thẻ ATM trên ITC", "r": "Chính"}, {"t": "CNTT phụ trách: Ban Giám đốc (ưu tiên 1), Phòng HTTD, KHDN Lớn, DVKH, PGD Thái Sơn", "r": "Chính"}, {"t": "Xác minh giao dịch nghi ngờ, khiếu nại, thẻ bị nuốt tại máy: ATM trụ sở chi nhánh, PGD Thái Sơn, VNPT, PGD Nguyễn Văn Lượng", "r": "Chính"}]}, {"id": "thanh", "u": "thanhnh4", "name": "Nguyễn Hữu Thành", "team": 1, "role": "Cán bộ điện toán", "duty": ["Lắp đặt, cài đặt, bảo trì máy tính, mạng nội bộ, đường truyền tại chi nhánh, PGD và điểm ATM.", "Hướng dẫn sử dụng phần mềm mới, đào tạo bảo mật và an toàn thông tin.", "Quản lý phân quyền user."], "camp": ["Không tham gia chiến dịch 5 mũi nhọn; tập trung bảo đảm vận hành an toàn, liên tục cho các team giao dịch."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Trần Minh Phong", "stt": 5, "tasks": [{"t": "Xử lý giao dịch thẻ ATM, thừa thiếu quỹ ATM, khiếu nại thẻ ATM tại quầy, CDs…, xử lý lỗi giao dịch thẻ ATM trên ITC", "r": "Chính"}, {"t": "CNTT phụ trách: Ban Giám đốc (ưu tiên 2), Phòng TCTH, KHDN Vừa & Nhỏ, Bán lẻ, PGD Nguyễn Văn Lượng, PGD Phú Nhuận", "r": "Chính"}, {"t": "Xác minh giao dịch nghi ngờ, khiếu nại, thẻ bị nuốt tại máy: ATM PGD Phú Nhuận, Công ty Giày Gia Định, ĐH Kinh tế Tài chính, SCSC", "r": "Chính"}]}, {"id": "tran", "u": "tranhb", "name": "Hồ Bảo Trân", "team": 1, "role": "Kế toán nội bộ, kế toán tài chính", "duty": ["Hạch toán kế toán tài chính và chi tiêu nội bộ.", "Lập bảng cân đối tài khoản, kê khai thuế GTGT hằng tháng.", "Theo dõi tài sản cố định, công cụ dụng cụ; lập báo cáo quản lý tài chính."], "camp": ["Không tham gia chiến dịch 5 mũi nhọn; tập trung bảo đảm vận hành an toàn, liên tục cho các team giao dịch."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Nguyễn Thùy Duyên", "stt": 6, "tasks": []}, {"id": "duyen", "u": "duyennt3", "name": "Nguyễn Thùy Duyên", "team": 1, "role": "Kế toán nội bộ, kế toán tài chính", "duty": ["Hạch toán kế toán tài chính và chi tiêu nội bộ.", "Lập bảng cân đối tài khoản, kê khai thuế GTGT hằng tháng.", "Theo dõi tài sản cố định, công cụ dụng cụ; lập báo cáo quản lý tài chính."], "camp": ["Không tham gia chiến dịch 5 mũi nhọn; tập trung bảo đảm vận hành an toàn, liên tục cho các team giao dịch."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Hồ Bảo Trân", "stt": 7, "tasks": []}, {"id": "huyen", "u": "tranthi.huyen", "name": "Trần Thị Huyền", "team": 2, "role": "Phó phòng, trưởng Team 2", "lead": true, "duty": ["Dịch vụ khách hàng: giải đáp thắc mắc, khiếu nại tại quầy; quản lý thời gian chờ và điều phối sảnh; đầu mối khiếu nại từ TTDVKH.", "Thẻ và ATM: thừa thiếu quỹ ATM, khiếu nại thẻ, thẻ tồn, giao nhận thẻ, xử lý lỗi trên ITC.", "Thanh toán: điện chuyển tiền đến, điện tra soát, điện tồn, danh sách Pending từ TTTT, tra soát Napas.", "Khuyến mãi và chi dự thưởng; công tác ISO; cơ sở vật chất, vệ sinh, 5S.", "Chỉ tiêu: nguồn vốn trường học, bệnh viện; bảo hiểm VBI, Manulife; bán chéo tiền vay, TTTM, BL, thẻ TDQT; KHCN Mainbank."], "camp": ["Giám sát chỉ tiêu 5 mũi nhọn của Team 2.", "Phụ trách chỉ tiêu hai mũi nhọn bảo hiểm VBI và Manulife; kèm cặp đầu mối Phương Hoa và Thùy Linh.", "Ngày 1–5: phân giao danh sách khách cho giao dịch viên Team 2.", "Ngày 27–30: đối soát kết quả Team 2 và hai mũi nhọn bảo hiểm với nguồn chính thức."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Đoàn Thị Bích Vân", "stt": 8, "tasks": [{"t": "Rà soát hồ sơ PGD Thái Sơn chuyển lên Scanimg", "r": "Chính"}, {"t": "Xử lý đơn thư, phúc đáp công văn Thuế, Công an: rà soát, ký và trình BGĐ", "r": "Thứ tự 2"}, {"t": "Theo dõi danh sách điện Pending từ TTTT", "r": "Thứ tự 2"}, {"t": "Xử lý điện đến sai tên, in lưu chứng từ theo QT 36.04", "r": "Thứ tự 1"}, {"t": "Tiếp nhận và phân công trả lời CC", "r": "Ưu tiên 1"}]}, {"id": "nguyetanh", "u": "anhntn18", "name": "Ngô Thị Nguyệt Ánh", "team": 2, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "camp": ["Bán theo danh sách khách 5 mũi nhọn được phó phòng phân giao.", "Cập nhật KPI hoạt động hằng ngày để đầu mối và phó phòng theo dõi."], "sup": "Trần Thị Huyền", "bk": "Thành viên Team 2 theo ca", "stt": 9, "tasks": [{"t": "Hạch toán các bút toán của kế toán nội bộ", "r": "Chính"}, {"t": "Điện TT của các PGD qua Scanimg và IB", "r": "Chính"}, {"t": "Xử lý giao dịch thẻ ATM, thừa thiếu quỹ ATM, khiếu nại thẻ ATM tại quầy, CDs…, xử lý lỗi giao dịch thẻ ATM trên ITC", "r": "Chính"}, {"t": "Xử lý điện chuyển tiền đến, điện KBNN, điện tra soát, theo dõi xử lý điện tồn", "r": "Dự phòng 2"}, {"t": "Báo có ĐVCNT, Hoàn trả, nhờ thu; Chấm GL xử lý hoàn trả, charge back", "r": "Dự phòng 1"}, {"t": "Báo cáo ngoại tệ với NHNN", "r": "Dự phòng 3"}, {"t": "Đối chiếu VNPT, thu phí, xuất hóa đơn", "r": "Dự phòng 3"}, {"t": "Trung tâm Đăng kiểm xe cơ giới", "r": "Dự phòng 1"}, {"t": "Bảo hiểm xã hội Quận Phú Nhuận (đầu mối làm việc, sao kê hàng tháng, báo cáo…)", "r": "Chính"}, {"t": "Tiền kiểm, hậu kiểm Ekyc admin hàng ngày", "r": "Dự phòng 2"}, {"t": "Lệnh chi trên Bank admin", "r": "Dự phòng 2"}, {"t": "Báo có Điện chuyển tiền ngoại tệ đến", "r": "Chính"}, {"t": "Theo dõi xử lý tra soát ngoại tệ", "r": "Chính"}, {"t": "Kế toán quỹ", "r": "Dự phòng 2"}, {"t": "Điện thanh toán KHDN PGD Thái Sơn (Scanimg, IB)", "r": "Chính"}], "rm": [["Đoàn Thị Bảo Trâm", "RM", "Phòng Bán lẻ"], ["Bùi Nguyễn Yến Nhi", "RM", "Phòng KHDN Lớn"], ["Vũ Nguyễn Ngọc Uyên", "RM", "Phòng KHDN Lớn"], ["Hà Nguyệt Tú", "RM", "Phòng KHDN Vừa & Nhỏ"]]}, {"id": "bao", "u": "baodq", "name": "Đặng Quốc Bảo", "team": 2, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "camp": ["Bán theo danh sách khách 5 mũi nhọn được phó phòng phân giao.", "Cập nhật KPI hoạt động hằng ngày để đầu mối và phó phòng theo dõi."], "sup": "Trần Thị Huyền", "bk": "Thành viên Team 2 theo ca", "stt": 10, "tasks": [{"t": "Hạch toán các bút toán của kế toán nội bộ", "r": "Chính"}, {"t": "Điện TT của các PGD qua Scanimg và IB", "r": "Chính"}, {"t": "Xử lý giao dịch thẻ ATM, thừa thiếu quỹ ATM, khiếu nại thẻ ATM tại quầy, CDs…, xử lý lỗi giao dịch thẻ ATM trên ITC", "r": "Dự phòng 2"}, {"t": "Xử lý điện chuyển tiền đến, điện KBNN, điện tra soát, theo dõi xử lý điện tồn", "r": "Chính"}, {"t": "Báo có ĐVCNT, Hoàn trả, nhờ thu; Chấm GL xử lý hoàn trả, charge back", "r": "Chính"}, {"t": "Hóa đơn điện tử, hóa đơn ĐVCNT", "r": "Chính"}, {"t": "Đối chiếu VNPT, thu phí, xuất hóa đơn", "r": "Chính"}, {"t": "Theo dõi các khoản thu nợ thẻ tín dụng bị lỗi để xử lý cho khách hàng", "r": "Chính"}, {"t": "Tiền kiểm, hậu kiểm Ekyc admin hàng ngày", "r": "Chính"}, {"t": "Báo có Điện chuyển tiền ngoại tệ đến", "r": "Dự phòng 2"}, {"t": "Theo dõi xử lý tra soát ngoại tệ", "r": "Dự phòng 2"}, {"t": "Kế toán quỹ", "r": "Chính"}, {"t": "Điện thanh toán KHCN PGD Thái Sơn (Scanimg, IB)", "r": "Chính"}, {"t": "Giải ngân chuyển tiền trong nước cho KHDN", "r": "Chính"}], "rm": [["Mai Cảnh Toàn", "SSO", "Phòng Bán lẻ"], ["Phạm Trường An", "TTTM", "Phòng KHDN Lớn"], ["Lê Thanh Tuyền", "RM", "Phòng KHDN Vừa & Nhỏ"], ["Phan Thanh Phú", "RM", "Phòng KHDN Vừa & Nhỏ"]]}, {"id": "khang", "u": "khangtn", "name": "Tô Ngọc Khang", "team": 2, "role": "Kiểm soát viên", "duty": ["Kiểm tra, phê duyệt và chịu trách nhiệm cuối cùng về tính chính xác của giao dịch tại quầy theo thẩm quyền.", "Giám sát thu chi tiền mặt của giao dịch viên tại trụ sở.", "Kiểm soát, phê duyệt hồ sơ tài khoản scan, upload lên CPM; đôn đốc hồ sơ chưa scan; lập kế hoạch chuyển hồ sơ về kho lưu trữ.", "Xử lý đơn thư, phúc đáp công văn của Thuế, Công an, cơ quan thẩm quyền.", "Tham gia điều phối sảnh, quản lý thời gian chờ."], "camp": ["Kiểm soát, phê duyệt giao dịch và hồ sơ tài khoản phát sinh từ chiến dịch theo thẩm quyền, bảo đảm tuân thủ."], "sup": "Trần Thị Huyền", "bk": "Lãnh đạo phòng theo phân công", "stt": 11, "tasks": [{"t": "Xử lý đơn thư, phúc đáp công văn Thuế, Công an: soạn thảo", "r": "Thứ tự 1"}, {"t": "Theo dõi danh sách điện Pending từ TTTT", "r": "Thứ tự 1"}, {"t": "Xử lý điện đến sai tên, in lưu chứng từ theo QT 36.04", "r": "Thứ tự 2"}, {"t": "Tiếp nhận và phân công trả lời CC", "r": "Ưu tiên 2"}]}, {"id": "phuonghoa", "u": "hoantp2", "name": "Nguyễn Thị Phương Hoa", "team": 2, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "camp": ["Đầu mối mũi nhọn VBI: tư vấn, báo phí, phát hành và tái tục.", "Phối hợp chuyên viên VBI cho Health Day, Auto Care, Business Protect, Renewal; theo dõi hợp đồng sắp hết hạn trong 60 ngày.", "Ngày 1–5: lập danh sách khách mục tiêu VBI từ dữ liệu được chiết xuất.", "Ngày 27–30: tổng hợp kết quả VBI gửi Phó phòng Huyền đối soát."], "sup": "Trần Thị Huyền", "bk": "Thành viên Team 2 theo ca", "tag": "Đầu mối VBI", "stt": 12, "tasks": [{"t": "Hạch toán các bút toán của kế toán nội bộ", "r": "Chính"}, {"t": "Điện TT của các PGD qua Scanimg và IB", "r": "Chính"}, {"t": "Xử lý điện chuyển tiền đến, điện KBNN, điện tra soát, theo dõi xử lý điện tồn", "r": "Dự phòng 1"}, {"t": "Đối chiếu VNPT, thu phí, xuất hóa đơn", "r": "Dự phòng 2"}, {"t": "Trung tâm Đăng kiểm xe cơ giới", "r": "Chính"}, {"t": "Theo dõi các khoản thu nợ thẻ tín dụng bị lỗi để xử lý cho khách hàng", "r": "Dự phòng 1"}, {"t": "Tiền kiểm, hậu kiểm Ekyc admin hàng ngày", "r": "Dự phòng 1"}, {"t": "Lệnh chi trên Bank admin", "r": "Chính"}, {"t": "Báo có Điện chuyển tiền ngoại tệ đến", "r": "Dự phòng 1"}, {"t": "Theo dõi xử lý tra soát ngoại tệ", "r": "Dự phòng 1"}, {"t": "Kế toán quỹ", "r": "Dự phòng 1"}, {"t": "Điện thanh toán PGD Nguyễn Văn Lượng (Scanimg, IB)", "r": "Chính"}, {"t": "Điện ngoại tệ KHCN phát sinh trên Bank Admin, IB (do Hải Yến chuyển)", "r": "Chính"}], "rm": [["Thái Kim Anh", "SSO", "Phòng Bán lẻ"], ["Trần Thị Tường Vy", "TTTM", "Phòng KHDN Lớn"], ["Võ Minh Như", "FDI", "Phòng KHDN Lớn"], ["Vũ Yến Nhi", "RM", "Phòng KHDN Vừa & Nhỏ"]]}, {"id": "kimlam", "u": "lamttk", "name": "Trương Thị Kim Lâm", "team": 2, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "camp": ["Bán theo danh sách khách 5 mũi nhọn được phó phòng phân giao.", "Cập nhật KPI hoạt động hằng ngày để đầu mối và phó phòng theo dõi."], "sup": "Trần Thị Huyền", "bk": "Thành viên Team 2 theo ca", "stt": 13, "tasks": [{"t": "Hạch toán các bút toán của kế toán nội bộ", "r": "Chính"}, {"t": "Điện TT của các PGD qua Scanimg và IB", "r": "Chính"}, {"t": "Xử lý giao dịch thẻ ATM, thừa thiếu quỹ ATM, khiếu nại thẻ ATM tại quầy, CDs…, xử lý lỗi giao dịch thẻ ATM trên ITC", "r": "Dự phòng 1"}, {"t": "Xử lý điện chuyển tiền đến, điện KBNN, điện tra soát, theo dõi xử lý điện tồn", "r": "Dự phòng 3"}, {"t": "Báo có ĐVCNT, Hoàn trả, nhờ thu; Chấm GL xử lý hoàn trả, charge back", "r": "Dự phòng 2"}, {"t": "Hóa đơn điện tử, hóa đơn ĐVCNT", "r": "Dự phòng 1"}, {"t": "Báo cáo ngoại tệ với NHNN", "r": "Chính"}, {"t": "Chuyển tiền VNPT hàng ngày", "r": "Dự phòng 2"}, {"t": "Quầy khách hàng ưu tiên", "r": "Dự phòng 2"}, {"t": "Trung tâm Đăng kiểm xe cơ giới", "r": "Dự phòng 3"}, {"t": "Bảo hiểm xã hội Quận Phú Nhuận (đầu mối làm việc, sao kê hàng tháng, báo cáo…)", "r": "Dự phòng 1"}, {"t": "Xử lý lương trên Bank admin", "r": "Dự phòng 1"}, {"t": "Lệnh chi trên Bank admin", "r": "Dự phòng 1"}, {"t": "Xử lý Alias chờ phê duyệt hàng ngày trên TPSS", "r": "Dự phòng 3"}, {"t": "Báo có Điện chuyển tiền ngoại tệ đến", "r": "Dự phòng 2"}, {"t": "Theo dõi xử lý tra soát ngoại tệ", "r": "Dự phòng 2"}, {"t": "Kiểm soát VFX cuối ngày", "r": "Dự phòng 3"}, {"t": "Theo dõi xử lý điện ngoại tệ trên Bank Admin, IB", "r": "Dự phòng 1"}, {"t": "Quản lý, theo dõi, xử lý thẻ nuốt theo quy trình", "r": "Dự phòng 1"}, {"t": "Điện thanh toán KHDN PGD Phú Nhuận (Scanimg, IB)", "r": "Chính"}], "rm": [["Nguyễn Đăng Khoa", "RM", "Phòng Bán lẻ"], ["Bùi Thị Mai Phương", "RM", "Phòng KHDN Lớn"], ["Đỗ Huy Cẩn", "RM", "Phòng KHDN Vừa & Nhỏ"], ["Nguyễn Hà Linh", "RM", "Phòng KHDN Vừa & Nhỏ"]]}, {"id": "van", "u": "dtbvan", "name": "Đoàn Thị Bích Vân", "team": 3, "role": "Phó phòng, trưởng Team 3", "lead": true, "duty": ["Chuyển tiền ngoại tệ: điều phối rà soát chứng từ mọi kênh, kiểm tra điện tối thiểu 30 phút/lần, bảo đảm SLA; bồi hoàn chứng từ.", "Rà soát, khắc phục lỗi dữ liệu DQS theo từng đợt.", "Cập nhật lưu lượng giao dịch, năng suất lao động để bố trí công việc; điều phối việc phát sinh; phân công công văn Edoc.", "Sổ theo dõi lỗi tác nghiệp, tổng hợp hằng tuần, lập biên bản chấn chỉnh.", "Phòng chống rửa tiền, quản lý rủi ro hoạt động; dịch vụ khách hàng và điều phối sảnh.", "Chỉ tiêu: thu thuần ngoài lãi (phí dịch vụ, kinh doanh ngoại tệ); KHDN Mainbank; MAU eFAST."], "camp": ["Giám sát chỉ tiêu 5 mũi nhọn của Team 3.", "Phụ trách chỉ tiêu ba mũi nhọn ngoại hối, tài khoản số đẹp, gói tài khoản V-Plus và V-Advance.", "Kèm cặp, đánh giá hai cán bộ quy hoạch Ly Na và Thùy Linh.", "Ngày 1–5: phân giao danh sách khách cho giao dịch viên Team 3.", "Ngày 27–30: đối soát kết quả Team 3 và ba mũi nhọn thu phí với nguồn chính thức."], "sup": "Nguyễn Thị Ánh Nguyệt", "bk": "Nguyễn Thị Ánh Nguyệt", "stt": 14, "tasks": [{"t": "Rà soát hồ sơ PGD Phú Nhuận, PGD Nguyễn Văn Lượng chuyển lên Scanimg", "r": "Chính"}, {"t": "Xử lý đơn thư, phúc đáp công văn Thuế, Công an", "r": "Thứ tự 3"}, {"t": "Theo dõi danh sách điện Pending từ TTTT", "r": "Thứ tự 3"}, {"t": "Xử lý điện đến sai tên, in lưu chứng từ theo QT 36.04", "r": "Thứ tự 3"}, {"t": "Tiếp nhận và phân công trả lời CC", "r": "Ưu tiên 3"}]}, {"id": "haiyen", "u": "yennth17", "name": "Nguyễn Thị Hải Yến", "team": 3, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "camp": ["Bán theo danh sách khách 5 mũi nhọn được phó phòng phân giao.", "Cập nhật KPI hoạt động hằng ngày để đầu mối và phó phòng theo dõi."], "sup": "Đoàn Thị Bích Vân", "bk": "Thành viên Team 3 theo ca", "stt": 15, "tasks": [{"t": "Hạch toán các bút toán của kế toán nội bộ", "r": "Chính"}, {"t": "Điện TT của các PGD qua Scanimg và IB", "r": "Chính"}, {"t": "Xử lý giao dịch thẻ ATM, thừa thiếu quỹ ATM, khiếu nại thẻ ATM tại quầy, CDs…, xử lý lỗi giao dịch thẻ ATM trên ITC", "r": "Dự phòng 3"}, {"t": "Báo có ĐVCNT, Hoàn trả, nhờ thu; Chấm GL xử lý hoàn trả, charge back", "r": "Dự phòng 3"}, {"t": "Hóa đơn điện tử, hóa đơn ĐVCNT", "r": "Dự phòng 2"}, {"t": "Báo cáo ngoại tệ với NHNN", "r": "Dự phòng 2"}, {"t": "Chuyển tiền VNPT hàng ngày", "r": "Dự phòng 3"}, {"t": "Quầy khách hàng ưu tiên", "r": "Dự phòng 3"}, {"t": "Trung tâm Đăng kiểm xe cơ giới", "r": "Dự phòng 2"}, {"t": "Theo dõi các khoản thu nợ thẻ tín dụng bị lỗi để xử lý cho khách hàng", "r": "Dự phòng 2"}, {"t": "Tiền kiểm, hậu kiểm Ekyc admin hàng ngày", "r": "Dự phòng 3"}, {"t": "Xử lý lương trên Bank admin", "r": "Chính"}, {"t": "Xử lý Alias chờ phê duyệt hàng ngày trên TPSS", "r": "Chính"}, {"t": "Báo có Điện chuyển tiền ngoại tệ đến", "r": "Dự phòng 1"}, {"t": "Theo dõi xử lý tra soát ngoại tệ", "r": "Dự phòng 1"}, {"t": "Kiểm soát VFX cuối ngày", "r": "Chính"}, {"t": "Theo dõi xử lý điện ngoại tệ trên Bank Admin, IB", "r": "Chính"}, {"t": "Kế toán quỹ", "r": "Dự phòng 3"}, {"t": "Quản lý, theo dõi, xử lý thẻ nuốt theo quy trình", "r": "Dự phòng 2"}, {"t": "Điện thanh toán KHDN PGD Thái Sơn (Scanimg, IB)", "r": "Chính"}], "rm": [["Phạm Thanh Khuê", "RM", "Phòng Bán lẻ"], ["Nguyễn Thị Kiều", "RM", "Phòng KHDN Lớn"], ["Mai Quang Đạt", "RM", "Phòng KHDN Vừa & Nhỏ"]]}, {"id": "thuhoa", "u": "hoaltt", "name": "Lê Thị Thu Hoa", "team": 3, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "camp": ["Bán theo danh sách khách 5 mũi nhọn được phó phòng phân giao.", "Cập nhật KPI hoạt động hằng ngày để đầu mối và phó phòng theo dõi."], "sup": "Đoàn Thị Bích Vân", "bk": "Thành viên Team 3 theo ca", "stt": 16, "tasks": [{"t": "Điện TT của các PGD qua Scanimg và IB", "r": "Chính"}, {"t": "Chuyển tiền VNPT hàng ngày", "r": "Chính"}, {"t": "Đối chiếu VNPT, thu phí, xuất hóa đơn", "r": "Dự phòng 1"}, {"t": "Quầy khách hàng ưu tiên", "r": "Chính"}, {"t": "Bảo hiểm xã hội Quận Phú Nhuận (đầu mối làm việc, sao kê hàng tháng, báo cáo…)", "r": "Dự phòng 2"}, {"t": "Xử lý lương trên Bank admin", "r": "Dự phòng 3"}, {"t": "Xử lý Alias chờ phê duyệt hàng ngày trên TPSS", "r": "Dự phòng 1"}, {"t": "Kiểm soát VFX cuối ngày", "r": "Dự phòng 1"}, {"t": "Theo dõi xử lý điện ngoại tệ trên Bank Admin, IB", "r": "Dự phòng 3"}, {"t": "Quản lý, theo dõi, xử lý thẻ nuốt theo quy trình", "r": "Chính"}, {"t": "Phòng chống rửa tiền", "r": "Chính"}, {"t": "Điện thanh toán KHCN PGD Phú Nhuận (Scanimg, IB)", "r": "Chính"}, {"t": "Phòng chống rửa tiền: cấp user SRT", "r": "Chính"}], "rm": [["Trần Minh Ngọc Diễm", "SSO", "Phòng Bán lẻ"], ["Lê Thị Phương Hà", "RM", "Phòng KHDN Lớn"], ["Phan Thị Tố Uyên", "RM", "Phòng KHDN Lớn"], ["Khưu Mộc Khôi", "RM", "Phòng KHDN Vừa & Nhỏ"]]}, {"id": "lyna", "u": "nattl", "name": "Trần Thị Ly Na", "team": 3, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "quyhoach": true, "camp": ["Đầu mối 3 mũi nhọn: ngoại hối, tài khoản số đẹp, gói tài khoản V-Plus và V-Advance.", "Theo dõi giao dịch ngoại tệ, kích hoạt eFAST, phí số đẹp và phí gói thực thu.", "Ngày 1–5: lập danh sách khách mục tiêu cho 3 mũi nhọn từ dữ liệu được chiết xuất.", "Ngày 27–30: tổng hợp kết quả 3 mũi nhọn gửi Phó phòng Bích Vân đối soát; trình bày trong họp tổng kết."], "sup": "Đoàn Thị Bích Vân", "bk": "Thành viên Team 3 theo ca", "tag": "Đầu mối ngoại hối, số đẹp, gói TK", "stt": 17, "tasks": [], "rm": [["Bùi Thị Phương Diễm", "RM", "Phòng Bán lẻ"], ["Nguyễn Đỗ Vân Anh", "RM", "Phòng Bán lẻ"], ["Khưu Hiếu Thảo", "FDI", "Phòng KHDN Lớn"], ["Nguyễn Thị Thùy Linh", "RM", "Phòng KHDN Vừa & Nhỏ"]]}, {"id": "thuylinh", "u": "linhptt3", "name": "Phạm Thị Thùy Linh", "team": 3, "role": "Giao dịch viên", "duty": ["Thực hiện giao dịch tiền gửi, thanh toán, ngoại tệ và dịch vụ tài khoản tại quầy.", "Thực hiện toàn bộ giao dịch cho KHDN theo danh sách phân công và cho KHCN, KHDN của RM được ghép cặp.", "Luân phiên trực cuối ngày, mở tài khoản theo lô; tự theo dõi, duy trì lãi suất tiền gửi đến hạn của khách mình quản lý.", "Phối hợp với các RM được ghép cặp để phục vụ khách của RM tại quầy.", "Tư vấn, bán chéo theo danh sách khách được giao; cập nhật KPI hoạt động cuối ngày."], "quyhoach": true, "camp": ["Đầu mối mũi nhọn Manulife: kết nối chuyên viên Manulife, tổ chức tư vấn, theo dõi hồ sơ đến hợp đồng phát hành.", "Nhân rộng cách làm của các cán bộ đã phát sinh doanh số.", "Ngày 1–5: lập danh sách khách mục tiêu Manulife từ dữ liệu được chiết xuất.", "Ngày 27–30: tổng hợp kết quả Manulife gửi Phó phòng Huyền đối soát; trình bày trong họp tổng kết."], "sup": "Đoàn Thị Bích Vân (team); Trần Thị Huyền (chỉ tiêu bảo hiểm)", "bk": "Thành viên Team 3 theo ca", "tag": "Đầu mối Manulife", "stt": 18, "tasks": [{"t": "Điện TT của các PGD qua Scanimg và IB", "r": "Chính"}, {"t": "Báo cáo ngoại tệ với NHNN", "r": "Dự phòng 1"}, {"t": "Chuyển tiền VNPT hàng ngày", "r": "Dự phòng 1"}, {"t": "Quầy khách hàng ưu tiên", "r": "Dự phòng 1"}, {"t": "Theo dõi các khoản thu nợ thẻ tín dụng bị lỗi để xử lý cho khách hàng", "r": "Dự phòng 3"}, {"t": "Bảo hiểm xã hội Quận Phú Nhuận (đầu mối làm việc, sao kê hàng tháng, báo cáo…)", "r": "Dự phòng 3"}, {"t": "Xử lý lương trên Bank admin", "r": "Dự phòng 2"}, {"t": "Lệnh chi trên Bank admin", "r": "Dự phòng 3"}, {"t": "Xử lý Alias chờ phê duyệt hàng ngày trên TPSS", "r": "Dự phòng 2"}, {"t": "Báo có Điện chuyển tiền ngoại tệ đến", "r": "Chính"}, {"t": "Theo dõi xử lý tra soát ngoại tệ", "r": "Chính"}, {"t": "Kiểm soát VFX cuối ngày", "r": "Dự phòng 2"}, {"t": "Theo dõi xử lý điện ngoại tệ trên Bank Admin, IB", "r": "Dự phòng 2"}, {"t": "Quản lý, theo dõi, xử lý thẻ nuốt theo quy trình", "r": "Dự phòng 3"}, {"t": "Điện thanh toán KHDN PGD Phú Nhuận (Scanimg, IB)", "r": "Chính"}], "rm": [["Lê Thị Hoanh", "RM", "Phòng Bán lẻ"], ["Nguyễn Xuân Thắng", "RM", "Phòng KHDN Lớn"], ["Từ Nguyễn Thanh Nhàn", "FDI", "Phòng KHDN Lớn"], ["Lư Lâm Phước", "RM", "Phòng KHDN Vừa & Nhỏ"]]}];
+const TEAM={1:"Team 1 · Khối back và hỗ trợ",2:"Team 2 · Giao dịch",3:"Team 3 · Giao dịch"};
+const byId={};P.forEach(function(p){byId[p.id]=p});
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
+function pb(id,label){var p=byId[id];return '<button type="button" class="pb" data-p="'+id+'" aria-pressed="false">'+esc(label||p.name)+'</button>'+(p.quyhoach?'<span class="star">Quy hoạch</span>':'')}
+function li(id,r){return '<li>'+pb(id)+'<span class="r">'+esc(r)+'</span></li>'}
+
+/* org chart */
+document.getElementById("org").innerHTML=
+ '<div class="head"><div class="r">Phó Phụ trách Phòng Dịch vụ Khách hàng</div>'+pb("nguyet")+'<div class="d">Phụ trách chung, trực tiếp quản lý Team 1</div></div><div class="stem"></div>'+
+ '<div class="branches">'+
+ '<section class="team t1"><h3>'+TEAM[1]+'</h3><p class="scope">Kho quỹ, kế toán, điện toán</p>'+
+  '<div class="lead">'+pb("nguyet")+'<div class="r">Phó phụ trách phòng, trực tiếp quản lý</div></div>'+
+  '<div class="unit"><p class="u">Kho quỹ</p><ul class="ppl">'+li("tien","Thủ kho")+li("tuoi","Thủ quỹ")+'</ul></div>'+
+  '<div class="unit"><p class="u">Kế toán nội bộ, kế toán tài chính</p><ul class="ppl">'+li("tran","Kế toán")+li("duyen","Kế toán")+'</ul></div>'+
+  '<div class="unit"><p class="u">Tổ điện toán</p><ul class="ppl">'+li("thanh","Điện toán")+li("phong","Điện toán")+'</ul></div>'+
+  '<div class="count">7 cán bộ</div></section>'+
+ '<section class="team t2"><h3>'+TEAM[2]+'</h3><p class="scope">Giao dịch, tư vấn và bán chéo</p>'+
+  '<div class="lead">'+pb("huyen")+'<div class="r">Phó phòng, trưởng Team 2</div></div>'+
+  '<div class="unit"><p class="u">Giao dịch viên</p><ul class="ppl">'+li("nguyetanh","GDV")+li("bao","GDV")+li("phuonghoa","GDV · đầu mối VBI")+li("kimlam","GDV")+'</ul></div>'+
+  '<div class="unit"><p class="u">Kiểm soát viên</p><ul class="ppl">'+li("khang","Kiểm soát viên")+'</ul></div>'+
+  '<div class="count">6 cán bộ</div></section>'+
+ '<section class="team t3"><h3>'+TEAM[3]+'</h3><p class="scope">Giao dịch, tư vấn và bán chéo</p>'+
+  '<div class="lead">'+pb("van")+'<div class="r">Phó phòng, trưởng Team 3</div></div>'+
+  '<div class="unit"><p class="u">Giao dịch viên</p><ul class="ppl">'+li("haiyen","GDV")+li("thuhoa","GDV")+li("lyna","GDV · đầu mối ngoại hối, số đẹp, gói TK")+li("thuylinh","GDV · đầu mối Manulife")+'</ul></div>'+
+  '<div class="count">5 cán bộ</div></section></div>';
+
+/* matrix */
+function sn(id){var w=byId[id].name.split(" ");var s=w.slice(-2).join(" ");return /^Thị /.test(s)?byId[id].name:s}
+var MX=[
+ {t:3,p:"Ngoại hối",o:"lyna",l:"van"},
+ {t:3,p:"Tài khoản số đẹp",o:"lyna",l:"van"},
+ {t:3,p:"Gói tài khoản V-Plus, V-Advance",o:"lyna",l:"van"},
+ {t:3,p:"Bảo hiểm nhân thọ Manulife",o:"thuylinh",l:"huyen"},
+ {t:2,p:"Bảo hiểm phi nhân thọ VBI",o:"phuonghoa",l:"huyen"}];
+document.getElementById("matrix").innerHTML=MX.map(function(m){
+ return '<div class="m t'+m.t+'"><div class="p">'+m.p+'</div><div class="o">Đầu mối: '+pb(m.o)+'</div><div class="s">Phó phòng phụ trách chỉ tiêu: '+pb(m.l)+'</div></div>'}).join("");
+
+/* task grid */
+var UID={};P.forEach(function(p){UID[p.u]=p.id});
+document.getElementById("gridbody").innerHTML=[{"t": "Hạch toán các bút toán của kế toán nội bộ", "c": [["anhntn18", "baodq", "hoantp2", "lamttk", "yennth17"], ["anhntn18", "baodq", "hoantp2", "lamttk", "yennth17"], [], []]}, {"t": "Điện TT của các PGD qua Scanimg và IB", "c": [["anhntn18", "baodq", "hoantp2", "lamttk", "yennth17", "hoaltt", "linhptt3"], [], [], []]}, {"t": "Xử lý giao dịch thẻ ATM, thừa thiếu quỹ ATM, khiếu nại thẻ ATM tại quầy, CDs…, xử lý lỗi giao dịch thẻ ATM trên ITC", "c": [["phongtm", "thanhnh4", "anhntn18"], ["lamttk"], ["baodq"], ["yennth17"]]}, {"t": "Xử lý điện chuyển tiền đến, điện KBNN, điện tra soát, theo dõi xử lý điện tồn", "c": [["baodq"], ["hoantp2"], ["anhntn18"], ["lamttk"]]}, {"t": "Báo có ĐVCNT, Hoàn trả, nhờ thu; Chấm GL xử lý hoàn trả, charge back", "c": [["baodq"], ["anhntn18"], ["lamttk"], ["yennth17"]]}, {"t": "Hóa đơn điện tử, hóa đơn ĐVCNT", "c": [["baodq"], ["lamttk"], ["yennth17"], ["lamttk"]]}, {"t": "Báo cáo ngoại tệ với NHNN", "c": [["lamttk"], ["linhptt3"], ["yennth17"], ["anhntn18"]]}, {"t": "Chuyển tiền VNPT hàng ngày", "c": [["hoaltt"], ["linhptt3"], ["lamttk"], ["yennth17"]]}, {"t": "Đối chiếu VNPT, thu phí, xuất hóa đơn", "c": [["baodq"], ["hoaltt"], ["hoantp2"], ["anhntn18"]]}, {"t": "Quầy khách hàng ưu tiên", "c": [["hoaltt"], ["linhptt3"], ["lamttk"], ["yennth17"]]}, {"t": "Trung tâm Đăng kiểm xe cơ giới", "c": [["hoantp2"], ["anhntn18"], ["yennth17"], ["lamttk"]]}, {"t": "Theo dõi các khoản thu nợ thẻ tín dụng bị lỗi để xử lý cho khách hàng", "c": [["baodq"], ["hoantp2"], ["yennth17"], ["linhptt3"]]}, {"t": "Bảo hiểm xã hội Quận Phú Nhuận (đầu mối làm việc, sao kê hàng tháng, báo cáo…)", "c": [["anhntn18"], ["lamttk"], ["hoaltt"], ["linhptt3"]]}, {"t": "Tiền kiểm, hậu kiểm Ekyc admin hàng ngày", "c": [["baodq"], ["hoantp2"], ["anhntn18"], ["yennth17"]]}, {"t": "Xử lý lương trên Bank admin", "c": [["yennth17"], ["lamttk"], ["linhptt3"], ["hoaltt"]]}, {"t": "Lệnh chi trên Bank admin", "c": [["hoantp2"], ["lamttk"], ["anhntn18"], ["linhptt3"]]}, {"t": "Xử lý Alias chờ phê duyệt hàng ngày trên TPSS", "c": [["yennth17"], ["hoaltt"], ["linhptt3"], ["lamttk"]]}, {"t": "Báo có Điện chuyển tiền ngoại tệ đến", "c": [["anhntn18", "linhptt3"], ["hoantp2", "yennth17"], ["baodq", "lamttk"], ["anhntn18", "linhptt3"]]}, {"t": "Theo dõi xử lý tra soát ngoại tệ", "c": [["anhntn18", "linhptt3"], ["hoantp2", "yennth17"], ["baodq", "lamttk"], ["anhntn18", "linhptt3"]]}, {"t": "Kiểm soát VFX cuối ngày", "c": [["yennth17"], ["hoaltt"], ["linhptt3"], ["lamttk"]]}, {"t": "Theo dõi xử lý điện ngoại tệ trên Bank Admin, IB", "c": [["yennth17"], ["lamttk"], ["linhptt3"], ["hoaltt"]]}, {"t": "Kế toán quỹ", "c": [["baodq"], ["hoantp2"], ["anhntn18"], ["yennth17"]]}, {"t": "Quản lý, theo dõi, xử lý thẻ nuốt theo quy trình", "c": [["hoaltt"], ["lamttk"], ["yennth17"], ["linhptt3"]]}, {"t": "Phòng chống rửa tiền", "c": [["hoaltt"], [], [], []]}].map(function(g){
+ return '<tr><td>'+esc(g.t)+'</td>'+g.c.map(function(us){return '<td>'+us.map(function(u){return UID[u]?pb(UID[u],sn(UID[u])):esc(u)}).join("<br>")+'</td>'}).join("")+'</tr>'}).join("");
+
+/* roster */
+document.getElementById("roster").innerHTML=P.map(function(p){
+ return '<tr class="t'+p.team+(p.lead?' lead-row':'')+'"><td class="stt">'+p.stt+'</td><td>'+pb(p.id)+'</td><td class="user">'+p.u+'</td><td><span class="tag">Team '+p.team+'</span></td><td>'+esc(p.role)+'</td></tr>'}).join("");
+
+/* RM table */
+document.getElementById("rmbody").innerHTML=P.filter(function(p){return p.role==="Giao dịch viên"}).map(function(p){
+ var cell=p.rm?'<ul class="rmlist">'+p.rm.map(function(r){return '<li>'+esc(r[0])+' <small>('+esc(r[1])+', '+esc(r[2])+')</small></li>'}).join("")+'</ul>':'<span class="user">Chưa có trong bảng ghép cặp ngày 02/06, cần bổ sung</span>';
+ return '<tr class="t'+p.team+'"><td>'+pb(p.id)+'</td><td><span class="tag">Team '+p.team+'</span></td><td>'+cell+'</td><td>'+(p.rm?p.rm.length:0)+'</td></tr>'}).join("");
+
+/* drawer */
+var drawer=document.getElementById("drawer"),scrim=document.getElementById("scrim"),lastFocus=null,order=P.map(function(p){return p.id});
+function ul(a){return '<ul>'+a.map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul>'}
+function render(p){
+ var h='<div class="dtop t'+p.team+'"><div><div class="r">'+esc(p.role)+'</div><h3 id="dname">'+esc(p.name)+'</h3><div class="u">'+p.u+' · STT '+p.stt+' · '+TEAM[p.team]+'</div></div><button type="button" class="close" id="dclose">Đóng</button></div>';
+ if(p.quyhoach)h+='<div class="qh"><b>Cán bộ quy hoạch.</b> Vai trò đầu mối trong chiến dịch là nhiệm vụ thử thách, được lãnh đạo phòng kèm cặp, đánh giá làm căn cứ phát triển lên vị trí cao hơn.</div>';
+ h+='<div class="facts"><div class="fact"><div class="l">Người giám sát trực tiếp</div><div class="v">'+esc(p.sup)+'</div></div><div class="fact"><div class="l">Người dự phòng</div><div class="v">'+esc(p.bk)+'</div></div></div>';
+ h+='<div class="blk"><h4>Nhiệm vụ thường xuyên</h4>'+ul(p.duty)+'</div>';
+ h+='<div class="blk"><h4>Vai trò trong chiến dịch 5 mũi nhọn</h4>'+ul(p.camp)+'</div>';
+ if(p.tasks&&p.tasks.length){
+  var main=p.tasks.filter(function(x){return x.r==="Chính"}),oth=p.tasks.filter(function(x){return x.r!=="Chính"});
+  h+='<div class="blk"><h4>Công việc chi tiết ('+p.tasks.length+' đầu việc)</h4>';
+  if(main.length)h+='<p class="sm">Phụ trách chính</p>'+ul(main.map(function(x){return x.t}));
+  if(oth.length)h+='<p class="sm">Dự phòng, thứ tự xử lý</p><ul>'+oth.map(function(x){return '<li>'+esc(x.t)+' <span class="rk">'+esc(x.r)+'</span></li>'}).join("")+'</ul>';
+  h+='</div>';
+ }else if(p.role==="Giao dịch viên"){
+  h+='<div class="blk"><h4>Công việc chi tiết</h4><p>Chưa có tên trong bảng phân công công việc 05/05/2026, cần bổ sung.</p></div>';
+ }
+ if(p.role==="Giao dịch viên"){
+  h+='<div class="blk"><h4>RM phối hợp (bảng ngày 02/06)</h4>'+(p.rm?ul(p.rm.map(function(r){return r[0]+' – '+r[1]+', '+r[2]})):'<p>Chưa có trong bảng ghép cặp ngày 02/06, cần bổ sung.</p>')+'</div>';
+ }
+ var i=order.indexOf(p.id);
+ h+='<div class="nav"><button type="button" data-go="'+order[(i-1+order.length)%order.length]+'">Cán bộ trước</button><button type="button" data-go="'+order[(i+1)%order.length]+'">Cán bộ tiếp theo</button></div>';
+ return h;
+}
+function setPressed(id){[].forEach.call(document.querySelectorAll(".pb"),function(b){b.setAttribute("aria-pressed",b.getAttribute("data-p")===id?"true":"false")})}
+function openP(id,upd){
+ var p=byId[id];if(!p)return;
+ if(!drawer.classList.contains("open"))lastFocus=document.activeElement;
+ drawer.innerHTML=render(p);drawer.scrollTop=0;
+ drawer.classList.add("open");scrim.classList.add("on");setPressed(id);
+ if(upd!==false){try{history.replaceState(null,"","#"+id)}catch(e){}}
+ document.getElementById("dclose").addEventListener("click",closeP);
+ [].forEach.call(drawer.querySelectorAll("[data-go]"),function(b){b.addEventListener("click",function(){openP(b.getAttribute("data-go"))})});
+ document.getElementById("dclose").focus({preventScroll:true});
+}
+function closeP(){
+ drawer.classList.remove("open");scrim.classList.remove("on");setPressed("");
+ try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}
+ if(lastFocus&&lastFocus.focus)lastFocus.focus({preventScroll:true});
+}
+document.addEventListener("click",function(e){var b=e.target.closest(".pb");if(b)openP(b.getAttribute("data-p"))});
+scrim.addEventListener("click",closeP);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&drawer.classList.contains("open"))closeP()});
+function fromHash(){var id=location.hash.replace("#","");if(byId[id])openP(id,false);else if(drawer.classList.contains("open")){drawer.classList.remove("open");scrim.classList.remove("on");setPressed("")}}
+window.addEventListener("hashchange",fromHash);fromHash();
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "Phòng DVKH VietinBank CN2",
+  "description": "Sơ đồ tổ chức, ma trận 5 mũi nhọn và bảng phân công công việc Phòng Dịch vụ Khách hàng VietinBank Chi nhánh 2 TP.HCM.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
